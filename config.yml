@@ -1,0 +1,17 @@
+Discord:
+  # DiscordBotのトークン
+  token: TOKEN
+  # メッセージを送信,編集,削除 したときに
+  # 同じようにMisskeyのノートを送信,編集,削除 する
+  # DiscordサーバーのID(guild_id) と、
+  # DiscordのチャンネルID(channel_id)
+  guild_id: 000000
+  channel_id: 000000
+
+Misskey:
+  # Misskeyサーバーのアドレス
+  address: misskey.io
+  # MisskeyAPIのトークン
+  token: TOKEN
+  # ノートの公開範囲 (public,home,followers,specified)
+  visibility: public
