@@ -68,13 +68,19 @@ class MyClient(discord.Client):
 
         # メッセージが編集されたら
         async def on_raw_message_edit(self, message):
+            data = message.data
+            attachments = data["attachments"] if "attachments" in data else []
+            content = data["content"] if "content" in data else ""
+
+            if not attachments and not content:
+                return
+
             # メッセージ(ノート) 削除処理
             if (DeleteMessage(message)):
                 # メッセージ(ノート) 作成処理
-                data = message.data
                 CreateMessage(
-                    data["attachments"] if "attachments" in data else [],
-                    data["content"],
+                    attachments,
+                    content,
                     message.guild_id,
                     message.channel_id,
                     message.message_id
