@@ -9,17 +9,16 @@ mk = Misskey(config["Misskey"]["address"], i=config["Misskey"]["token"])
 
 
 def CreateMessage(attachments, content, guild_id, channel_id, message_id):
-    print("CreateMessage")
     # MisskeyのドライブにアップロードしたファイルのIDリスト
     fileIDList = util.uploadDiscordFile(attachments, mk)
     # Misskey ノート 作成
     note = util.sendNote(content, fileIDList, mk, config["Misskey"]["visibility"])
     # データベースにIDリスト登録
     database.addIDList(guild_id, channel_id, message_id, note["createdNote"]["id"])
+    print("CreateMessage")
 
 
 def DeleteMessage(message):
-    print("DeleteMessage")
     # データベース ノートIDを取得
     noteID = database.getNoteID(message.guild_id, message.channel_id, message.message_id)
     # もし該当するノートがあるなら
@@ -28,6 +27,7 @@ def DeleteMessage(message):
         mk.notes_delete(note_id=noteID)
         # データベースから削除
         database.deleteRecord(message.guild_id, message.channel_id, message.message_id)
+        print("DeleteMessage")
         return True
     return False
 
