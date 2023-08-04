@@ -4,6 +4,8 @@ import yaml
 
 # Misskey ノート作成
 def sendNote(content: str, fileIDList: [str], mk, vis: str):
+    if (not content):
+        content = None
     if (not fileIDList):
         fileIDList = None
     return mk.notes_create(text=content, file_ids=fileIDList, visibility=vis)
