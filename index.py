@@ -28,6 +28,8 @@ def DeleteMessage(message):
         mk.notes_delete(note_id=noteID)
         # データベースから削除
         database.deleteRecord(message.guild_id, message.channel_id, message.message_id)
+        return True
+    return False
 
 
 class MyClient(discord.Client):
@@ -67,15 +69,16 @@ class MyClient(discord.Client):
         # メッセージが編集されたら
         async def on_raw_message_edit(self, message):
             # メッセージ(ノート) 削除処理
-            DeleteMessage(message)
-            # メッセージ(ノート) 作成処理
-            CreateMessage(
-                message.data["attachments"],
-                message.data["content"],
-                message.guild_id,
-                message.channel_id,
-                message.message_id
-            )
+            if (DeleteMessage(message)):
+                # メッセージ(ノート) 作成処理
+                data = message.data
+                CreateMessage(
+                    data["attachments"] if "attachments" in data else [],
+                    data["content"],
+                    message.guild_id,
+                    message.channel_id,
+                    message.message_id
+                )
 
     except Exception as err:
         print(err)
