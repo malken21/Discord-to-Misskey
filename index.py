@@ -71,6 +71,7 @@ class MyClient(discord.Client):
             data = message.data
             attachments = data["attachments"] if "attachments" in data else []
             content = data["content"] if "content" in data else ""
+
             # attachments と content 両方 空 だったら
             if not attachments and not content:
                 return
